@@ -31,8 +31,8 @@ private:
     Texture2D run{LoadTexture("characters/Gordon/Unarmed_Run/Unarmed_Run_full.png")};
     
     // Position vectors
-    Vector2 screenPos;
-    Vector2 worldPos;
+    Vector2 screenPos{};
+    Vector2 worldPos{};
 
     // Direction - 1: facing right, -1: facing left
     float rightLeft{1.0f};
@@ -115,6 +115,10 @@ int main(){
     // Map position
     Vector2 worldMapPos{0.0, 0.0};
 
+    // Character variables
+    Character gordon;
+    gordon.SetScreenPos(kWindowWidth, kWindowHeight); 
+
     SetTargetFPS(60);
 
     // Keep window open and clear background
@@ -124,8 +128,13 @@ int main(){
         BeginDrawing();
         ClearBackground(WHITE);
 
+        worldMapPos = Vector2Scale(gordon.GetWorldPos(), -1.0f);
+
         // Draw world map
         DrawTextureEx(worldMap, worldMapPos, 0.0, 4.0, WHITE);
+        
+        // Character update
+        gordon.Tick(GetFrameTime());
 
         // Stop drawing
         EndDrawing();
