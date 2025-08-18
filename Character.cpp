@@ -35,6 +35,9 @@ void Character::SetScreenPos(int winWidth, int winHeight){
 // Tick - Character update
 void Character::Tick(float deltaTime){
     
+    // Last frame position
+    worldPosLastFrame = worldPos;
+
     // Gets WASD player input and returns a normalized direction vector
     Vector2 direction{};
 
@@ -74,4 +77,8 @@ void Character::Tick(float deltaTime){
     // Select different row from spritesheet
     source.y = ((rightLeft == 1.0f) ? 2.0f * source.height : 1.0f * source.height);
     DrawTexturePro(texture, source, destRec, Vector2{}, 0.0f, WHITE);
+}
+
+void Character::UndoMovement(){
+    worldPos = worldPosLastFrame;
 }

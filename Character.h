@@ -27,6 +27,7 @@ public:
     Vector2 GetWorldPos() { return worldPos; }
     void SetScreenPos(int winWidth, int winHeight);
     void Tick(float deltaTime);
+    void UndoMovement();
 
 private:
     // Character textures
@@ -37,6 +38,7 @@ private:
     // Position vectors
     Vector2 screenPos{};
     Vector2 worldPos{};
+    Vector2 worldPosLastFrame{};
 
     // Direction - 1: facing right, -1: facing left
     float rightLeft{1.0f};

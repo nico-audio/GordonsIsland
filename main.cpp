@@ -3,7 +3,7 @@
  * Description: [Top down 2D game]
  * Author:      [Nico V.]
  * Created on:  [11/08/2025]
- * Last updated:[18/08/2025, Character instance]
+ * Last updated:[18/08/2025, Character instance, check map bounds]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -32,6 +32,7 @@ int main(){
 
     // Map position
     Vector2 worldMapPos{0.0, 0.0};
+    const float mapScale{4.0f};
 
     // Character variables
     Character gordon;
@@ -50,10 +51,19 @@ int main(){
         worldMapPos = Vector2Scale(gordon.GetWorldPos(), -1.0f);
 
         // Draw world map
-        DrawTextureEx(worldMap, worldMapPos, 0.0, 4.0, WHITE);
+        DrawTextureEx(worldMap, worldMapPos, 0.0, mapScale, WHITE);
         
         // Character update
         gordon.Tick(GetFrameTime());
+
+        // Check map bounds
+        if (gordon.GetWorldPos().x < 0.0f ||
+            gordon.GetWorldPos().y < 0.0f ||
+            gordon.GetWorldPos().x + kWindowWidth > worldMap.width * mapScale ||
+            gordon.GetWorldPos().y + kWindowHeight > worldMap.height * mapScale)
+            {
+                gordon.UndoMovement();
+            }
 
         // Stop drawing
         EndDrawing();
