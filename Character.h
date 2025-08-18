@@ -4,7 +4,7 @@
  *              position, movement, animation, and rendering.
  * Author:      [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[18/08/2025, setup header file ]
+ * Last updated:[18/08/2025, setup header file, Undo Movement function]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -15,6 +15,7 @@
  *  - Create an instance of Character in main
  *  - Call SetScreenPos() once to initialize its screen position.
  *  - Call Tick() every frame to draw, update character and handle input
+ *  - Call UndoMovement() to limit the player character's movement to boundaries.
  *  
  */
 
@@ -23,9 +24,8 @@
 // Character - Handles player character movement, animation and rendering
 class Character {
 public:
-    Character();
+    Character(int winWidth, int winHeight);
     Vector2 GetWorldPos() { return worldPos; }
-    void SetScreenPos(int winWidth, int winHeight);
     void Tick(float deltaTime);
     void UndoMovement();
 
@@ -50,9 +50,9 @@ private:
     const float kUpdateTime{1.0f / 12.0f};
     const float kSpeed{4.0f};
     float sheetHeight{4.0f};
-    //float animFrames{12.0f}; // Total frames in the current animation spritesheet
 
     // Sprite dimensions
     float width{};
-    float height{}; 
+    float height{};
+    float scale{4.0f}; 
 };

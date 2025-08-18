@@ -35,8 +35,7 @@ int main(){
     const float mapScale{4.0f};
 
     // Character variables
-    Character gordon;
-    gordon.SetScreenPos(kWindowWidth, kWindowHeight); 
+    Character gordon{kWindowWidth, kWindowHeight};
 
     SetTargetFPS(60);
 

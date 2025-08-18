@@ -4,7 +4,7 @@
  *              logic for character movement, animation updates, and rendering.]
  * Author:  [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[18/08/2025, Implemented constructor, Tick, and SetScreenPos]
+ * Last updated:[18/08/2025, Implemented constructor, Tick, SetScreenPos and Undo Movement]
  * Version:     [0.0.1]
  * Notes:
  *  - Instantiated and used by main.cpp.
@@ -21,15 +21,12 @@
 #include "Character.h"
 #include "raymath.h"
 
-Character::Character(){
+Character::Character(int winWidth, int winHeight){
     width = texture.width / maxFrames;
     height = texture.height / sheetHeight;
-}
-
-void Character::SetScreenPos(int winWidth, int winHeight){
     screenPos = {
-        (float)winWidth / 2.0f - 4.0f * (0.5f * width),
-        (float)winHeight / 2.0f - 4.0f * (0.5f * height)};
+        static_cast<float>(winWidth) / 2.0f - scale * (0.5f * width),
+        static_cast<float>(winHeight) / 2.0f - scale * (0.5f * height)};
 }
 
 // Tick - Character update
@@ -47,16 +44,15 @@ void Character::Tick(float deltaTime){
     if (IsKeyDown(KEY_S)) direction.y += 1.0;
 
     // Movement
-    //Vector2 direction = getInputDirection();
     if (Vector2Length(direction) != 0.0) {
         worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), kSpeed));
         rightLeft = ((direction.x < 0.f) ? -1.0f : 1.0f);
-        texture = run;
-        maxFrames = 8.0f;
+        texture = run; // Switch to run animation
+        maxFrames = 8;
     }
     else {
-        texture = idle;
-        maxFrames = 12.0f;
+        texture = idle; // Switch to idle animation
+        maxFrames = 12;
     }
 
     // Update running time
@@ -72,7 +68,7 @@ void Character::Tick(float deltaTime){
     
     // Draw character
     Rectangle source{frame * width, 0.0f, width, height};
-    Rectangle destRec{screenPos.x, screenPos.y, 4.0f * width, 4.0f * height};
+    Rectangle destRec{screenPos.x, screenPos.y, scale * width, scale * height};
     
     // Select different row from spritesheet
     source.y = ((rightLeft == 1.0f) ? 2.0f * source.height : 1.0f * source.height);
