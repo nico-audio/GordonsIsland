@@ -28,10 +28,11 @@ void Prop::Render(Vector2 gordonPos){
 
 Rectangle Prop::GetCollisionRec(Vector2 gordonPos){
   Vector2 screenPos{Vector2Subtract(worldPos, gordonPos)};
+  float pad{50.0f}; //rectangle padding
   return Rectangle{
-      screenPos.x,
-      screenPos.y,
-      texture.width * scale,
-      texture.height * scale
+      screenPos.x + pad,
+      screenPos.y + pad,
+      (texture.width * scale) - 2* pad,
+      (texture.height * scale) - 2* pad
     };
 }

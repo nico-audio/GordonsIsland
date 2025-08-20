@@ -80,10 +80,11 @@ void Character::UndoMovement(){
 }
 
 Rectangle Character::GetCollisionRec(){
+    float pad{90.0f}; // rectangle pad
     return Rectangle{
-        screenPos.x,
-        screenPos.y,
-        width * scale,
-        height * scale
+        screenPos.x + pad,
+        screenPos.y + pad,
+        (width * scale) - 2 * pad,
+        (height * scale) - 2 * pad
     };
 }
