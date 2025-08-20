@@ -30,7 +30,7 @@ int main(){
     InitWindow(kWindowWidth, kWindowHeight, "Top down 2D game");
 
     // Load world map texture
-    Texture2D worldMap = LoadTexture("nature_tileset/WorldMap.png");
+    Texture2D worldMap = LoadTexture("nature_tileset/WorldMap2.png");
 
     // Map position
     Vector2 worldMapPos{0.0, 0.0};
