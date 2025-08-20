@@ -13,6 +13,7 @@
  * - Instantiate a Prop object in your main game file.
  * - Call Render() on tick, passing the player's world position
  *    to draw the prop relative to the camera/player.
+ * - Call GetCollisionRec() to check for collision with the props.
  *  
  */
 
@@ -22,6 +23,7 @@
     public:
         Prop(Vector2 pos, Texture2D tex);
         void Render(Vector2 gordonPos);
+        Rectangle GetCollisionRec(Vector2 gordonPos);
     private:
         Texture2D texture{};
         Vector2 worldPos{};

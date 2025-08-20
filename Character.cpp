@@ -4,7 +4,7 @@
  *              logic for character movement, animation updates, and rendering.]
  * Author:  [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[18/08/2025, Implemented constructor, Tick, SetScreenPos and Undo Movement]
+ * Last updated:[20/08/2025, Implemented GetCollisionRec]
  * Version:     [0.0.1]
  * Notes:
  *  - Instantiated and used by main.cpp.
@@ -77,4 +77,14 @@ void Character::Tick(float deltaTime){
 
 void Character::UndoMovement(){
     worldPos = worldPosLastFrame;
+}
+
+Rectangle Character::GetCollisionRec(){
+    float pad{90.0f}; // rectangle pad
+    return Rectangle{
+        screenPos.x + pad,
+        screenPos.y + pad,
+        (width * scale) - 2 * pad,
+        (height * scale) - 2 * pad
+    };
 }

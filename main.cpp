@@ -30,7 +30,7 @@ int main(){
     InitWindow(kWindowWidth, kWindowHeight, "Top down 2D game");
 
     // Load world map texture
-    Texture2D worldMap = LoadTexture("nature_tileset/WorldMap.png");
+    Texture2D worldMap = LoadTexture("nature_tileset/WorldMap2.png");
 
     // Map position
     Vector2 worldMapPos{0.0, 0.0};
@@ -40,7 +40,10 @@ int main(){
     Character gordon{kWindowWidth, kWindowHeight};
 
     // Objects
-    Prop plant{Vector2{}, LoadTexture("objects/Fetus_shadow1_2.png")};
+    Prop props[2]{
+        Prop{Vector2{600.0f, 600.0f}, LoadTexture("objects/Fetus_shadow1_2.png")},
+        Prop{Vector2{400.0f, 500.0f}, LoadTexture("objects/Eye_plant_shadow2_2.png")}
+    };
 
     SetTargetFPS(60);
 
@@ -58,7 +61,9 @@ int main(){
         DrawTextureEx(worldMap, worldMapPos, 0.0, mapScale, WHITE);
 
         // Render Props
-        plant.Render(gordon.GetWorldPos());
+        for(auto prop : props){
+            prop.Render(gordon.GetWorldPos());
+        }
 
         // Character update
         gordon.Tick(GetFrameTime());
@@ -68,9 +73,27 @@ int main(){
             gordon.GetWorldPos().y < 0.0f ||
             gordon.GetWorldPos().x + kWindowWidth > worldMap.width * mapScale ||
             gordon.GetWorldPos().y + kWindowHeight > worldMap.height * mapScale)
-            {
+        {
+            gordon.UndoMovement();
+            DrawText("Hit the bounds!", 10, 10, 20, RED); // debug
+        }
+
+        // Get the character's collision rectangle once per frame
+        Rectangle gordonCollisionRec = gordon.GetCollisionRec();
+
+        // Check for prop collision
+        for (auto prop : props){
+            Rectangle propCollisionRec = prop.GetCollisionRec(gordon.GetWorldPos());
+            if (CheckCollisionRecs(propCollisionRec, gordonCollisionRec)){
                 gordon.UndoMovement();
+                DrawText("Collision Detected!", 10, 10, 20, RED); // debug
             }
+            // Draw the prop's collision box for debugging
+            DrawRectangleLines(propCollisionRec.x, propCollisionRec.y, propCollisionRec.width, propCollisionRec.height, RED);
+        }
+
+        // Draw the character's collision box for debugging
+        DrawRectangleLines(gordonCollisionRec.x, gordonCollisionRec.y, gordonCollisionRec.width, gordonCollisionRec.height, BLUE);
 
         // Stop drawing
         EndDrawing();

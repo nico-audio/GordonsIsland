@@ -4,7 +4,7 @@
  *              position, movement, animation, and rendering.
  * Author:      [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[18/08/2025, setup header file, Undo Movement function]
+ * Last updated:[20/08/2025, Collision box]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -28,7 +28,7 @@ public:
     Vector2 GetWorldPos() { return worldPos; }
     void Tick(float deltaTime);
     void UndoMovement();
-
+    Rectangle GetCollisionRec();
 private:
     // Character textures
     Texture2D texture{LoadTexture("characters/Gordon/Unarmed_Idle/Unarmed_Idle_full.png")};
