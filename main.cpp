@@ -1,13 +1,14 @@
 /*
  * File:        [main.cpp]
- * Description: [Top down 2D game]
+ * Description: [The main entry point - initializes the game window, loads assets,
+ *              and runs the main game loop.] 
  * Author:      [Nico V.]
  * Created on:  [11/08/2025]
- * Last updated:[18/08/2025, Character instance, check map bounds]
+ * Last updated:[20/08/2025, Render prop at map location]
  * Version:     [0.0.1]
  *
  * Notes:
- *
+ *  - Handles boundary checking to keep the player within the map.
  *
  * Usage:
  * [Controls]
@@ -17,6 +18,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Character.h"
+#include "Prop.h"
 
 int main(){
 
@@ -37,6 +39,9 @@ int main(){
     // Character variables
     Character gordon{kWindowWidth, kWindowHeight};
 
+    // Objects
+    Prop plant{Vector2{}, LoadTexture("objects/Fetus_shadow1_2.png")};
+
     SetTargetFPS(60);
 
     // Keep window open and clear background
@@ -51,7 +56,10 @@ int main(){
 
         // Draw world map
         DrawTextureEx(worldMap, worldMapPos, 0.0, mapScale, WHITE);
-        
+
+        // Render Props
+        plant.Render(gordon.GetWorldPos());
+
         // Character update
         gordon.Tick(GetFrameTime());
 
