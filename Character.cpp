@@ -31,9 +31,8 @@ Character::Character(int winWidth, int winHeight){
 
 // Tick - Character update
 void Character::Tick(float deltaTime){
-    
-    // Last frame position
-    worldPosLastFrame = worldPos;
+
+    BaseCharacter::Tick(deltaTime);
 
     // Gets WASD player input and returns a normalized direction vector
     Vector2 direction{};
@@ -54,37 +53,4 @@ void Character::Tick(float deltaTime){
         texture = idle; // Switch to idle animation
         maxFrames = 12;
     }
-
-    // Update running time
-    runningTime += deltaTime;
-
-    // Update animation frame
-    if (runningTime >= kUpdateTime){
-        runningTime = 0.0;
-        frame++;
-        if (frame > maxFrames)
-        frame = 0;
-    }
-    
-    // Draw character
-    Rectangle source{frame * width, 0.0f, width, height};
-    Rectangle destRec{screenPos.x, screenPos.y, scale * width, scale * height};
-    
-    // Select different row from spritesheet
-    source.y = ((rightLeft == 1.0f) ? 2.0f * source.height : 1.0f * source.height);
-    DrawTexturePro(texture, source, destRec, Vector2{}, 0.0f, WHITE);
-}
-
-void Character::UndoMovement(){
-    worldPos = worldPosLastFrame;
-}
-
-Rectangle Character::GetCollisionRec(){
-    float pad{90.0f}; // rectangle pad
-    return Rectangle{
-        screenPos.x + pad,
-        screenPos.y + pad,
-        (width * scale) - 2 * pad,
-        (height * scale) - 2 * pad
-    };
 }
