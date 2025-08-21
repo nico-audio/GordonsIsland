@@ -4,11 +4,12 @@
  *              and runs the main game loop.] 
  * Author:      [Nico V.]
  * Created on:  [11/08/2025]
- * Last updated:[20/08/2025, Render prop at map location]
+ * Last updated:[21/08/2025, Enemy instance]
  * Version:     [0.0.1]
  *
  * Notes:
- *  - Handles boundary checking to keep the player within the map.
+ *  - Handles boundary checking to keep the player within the map limits.
+ *  - Implements collision detection between the player and static props.
  *
  * Usage:
  * [Controls]
@@ -19,6 +20,8 @@
 #include "raymath.h"
 #include "Character.h"
 #include "Prop.h"
+#include "Enemy.h"
+#include <vector>
 
 int main(){
 
@@ -38,11 +41,17 @@ int main(){
 
     // Character variables
     Character gordon{kWindowWidth, kWindowHeight};
-
+    
     // Objects
-    Prop props[2]{
+    std::vector<Prop> props{
         Prop{Vector2{600.0f, 600.0f}, LoadTexture("objects/Fetus_shadow1_2.png")},
         Prop{Vector2{400.0f, 500.0f}, LoadTexture("objects/Eye_plant_shadow2_2.png")}
+    };
+    
+    // Enemy variables
+    Enemy vampire{Vector2{},
+                  LoadTexture("characters/Enemies/enemies-vampire_idle.png"),
+                  LoadTexture("characters/Enemies/enemies-vampire_movement.png")
     };
 
     SetTargetFPS(60);
@@ -94,6 +103,15 @@ int main(){
 
         // Draw the character's collision box for debugging
         DrawRectangleLines(gordonCollisionRec.x, gordonCollisionRec.y, gordonCollisionRec.width, gordonCollisionRec.height, BLUE);
+
+        // Enemy update
+        vampire.Tick(GetFrameTime());
+
+        // Get the character's collision rectangle once per frame
+        Rectangle enemyCollisionRec = vampire.GetCollisionRec();
+        
+        // Draw enemy's collision box for debugging
+        DrawRectangleLines(enemyCollisionRec.x, enemyCollisionRec.y, enemyCollisionRec.width, enemyCollisionRec.height, YELLOW);
 
         // Stop drawing
         EndDrawing();

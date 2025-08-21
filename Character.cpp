@@ -74,17 +74,3 @@ void Character::Tick(float deltaTime){
     source.y = ((rightLeft == 1.0f) ? 2.0f * source.height : 1.0f * source.height);
     DrawTexturePro(texture, source, destRec, Vector2{}, 0.0f, WHITE);
 }
-
-void Character::UndoMovement(){
-    worldPos = worldPosLastFrame;
-}
-
-Rectangle Character::GetCollisionRec(){
-    float pad{90.0f}; // rectangle pad
-    return Rectangle{
-        screenPos.x + pad,
-        screenPos.y + pad,
-        (width * scale) - 2 * pad,
-        (height * scale) - 2 * pad
-    };
-}
