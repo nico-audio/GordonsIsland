@@ -21,7 +21,7 @@
 #include "Character.h"
 #include "Prop.h"
 #include "Enemy.h"
-#include <vector>
+
 
 int main(){
 
@@ -43,7 +43,7 @@ int main(){
     Character gordon{kWindowWidth, kWindowHeight};
     
     // Objects
-    std::vector<Prop> props{
+    Prop props[2]{
         Prop{Vector2{600.0f, 600.0f}, LoadTexture("objects/Fetus_shadow1_2.png")},
         Prop{Vector2{400.0f, 500.0f}, LoadTexture("objects/Eye_plant_shadow2_2.png")}
     };

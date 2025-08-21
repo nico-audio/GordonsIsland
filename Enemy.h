@@ -22,7 +22,7 @@
 class Enemy : public BaseCharacter {
 public:
     Enemy(Vector2 pos, Texture2D idleTexture, Texture2D runTexture);
-    void Tick(float deltaTime);
+    virtual void Tick(float deltaTime) override;
 private:
     int maxFrames{6};
 };
