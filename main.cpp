@@ -4,7 +4,7 @@
  *              and runs the main game loop.] 
  * Author:      [Nico V.]
  * Created on:  [11/08/2025]
- * Last updated:[21/08/2025, Enemy instance]
+ * Last updated:[22/08/2025, Set enemy's target to Gordon]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -53,6 +53,9 @@ int main(){
                   LoadTexture("characters/Enemies/enemies-vampire_idle.png"),
                   LoadTexture("characters/Enemies/enemies-vampire_movement.png")
     };
+    
+    // Set enemy target
+    vampire.SetTarget(&gordon);
 
     SetTargetFPS(60);
 

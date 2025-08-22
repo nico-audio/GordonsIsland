@@ -19,8 +19,10 @@
  *  
  */
 
-#include "raylib.h"
-#include "BaseCharacter.h"
+ #ifndef CHARACTER_H
+ #define CHARACTER_H
+ #include "raylib.h"
+ #include "BaseCharacter.h"
 
 // Character - Handles player character movement, animation and rendering
 class Character : public BaseCharacter {
@@ -31,3 +33,5 @@ private:
     int maxFrames{12};
     float sheetHeight{4.0f};
 };
+
+#endif
