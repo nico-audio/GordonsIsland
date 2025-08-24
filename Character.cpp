@@ -44,7 +44,7 @@ void Character::Tick(float deltaTime){
 
     // Movement
     if (Vector2Length(direction) != 0.0) {
-        worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), kSpeed));
+        worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(direction), speed));
         rightLeft = ((direction.x < 0.f) ? -1.0f : 1.0f);
         texture = run; // Switch to run animation
         maxFrames = 8;

@@ -4,7 +4,7 @@
  *              position, movement, animation, and rendering.
  * Author:      [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[21/08/2025, Derive from BaseCharacter class]
+ * Last updated:[24/08/2025, Screen pos getter]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -16,6 +16,7 @@
  *  - Call SetScreenPos() once to initialize its screen position.
  *  - Call Tick() every frame to draw, update character and handle input
  *  - Call UndoMovement() to limit the player character's movement to boundaries or when colliding.
+ *  - Call GetScreenPos() to get the character's world position
  *  
  */
 
@@ -29,6 +30,7 @@ class Character : public BaseCharacter {
 public:
     Character(int winWidth, int winHeight);
     virtual void Tick(float deltaTime) override;
+    Vector2 GetScreenPos() { return screenPos; };
 private:
     int maxFrames{12};
     float sheetHeight{4.0f};

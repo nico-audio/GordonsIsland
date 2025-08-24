@@ -3,7 +3,7 @@
  * Description: [Parent class for characters]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[21/08/2025, Create BaseCharacter class]
+ * Last updated:[24/08/2025, Change speed variable type]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -50,7 +50,7 @@ protected:
     int frame{}; // current animation frame
     int maxFrames{6};
     const float kUpdateTime{1.0f / 12.0f};
-    const float kSpeed{4.0f};
+    float speed{4.0f};
 
     // Sprite dimensions
     float width{};
