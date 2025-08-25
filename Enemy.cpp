@@ -3,7 +3,7 @@
  * Description: [Implements the Enemy class methods.]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[24/08/2025, Enemy AI - Chase the target]
+ * Last updated:[25/08/2025, Enemy AI - Chase the target, get screen position]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -28,22 +28,17 @@ Enemy::Enemy(Vector2 pos, Texture2D idleTexture, Texture2D runTexture){
     speed = 3.5f;
 }
 
-
 // Tick - Enemy update
 void Enemy::Tick(float deltaTime){
-    
-    /*Enemy AI - chase the target*/ 
-    
-    // Get target screen position and nomalize vector
-    Vector2 toTarget = Vector2Subtract(target -> GetScreenPos(), screenPos);
-    toTarget = Vector2Normalize(toTarget);
-    
-    // toTarget gets the length of speed
-    toTarget = Vector2Scale(toTarget, speed);
-    
-    // Move the enemy  
-    worldPos = Vector2Add(worldPos, toTarget); 
-    screenPos = Vector2Subtract(worldPos, target -> GetWorldPos());
+
+    /*Enemy AI - chase the target*/
+
+    // Get target screen position
+    velocity = Vector2Subtract(target->GetScreenPos(), GetScreenPos());
     BaseCharacter::Tick(deltaTime);
-    
+}
+
+// Returns the screen position
+Vector2 Enemy::GetScreenPos(){
+    return Vector2Subtract(worldPos, target->GetWorldPos());
 }

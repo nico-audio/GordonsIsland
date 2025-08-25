@@ -3,10 +3,12 @@
  * Description: [Parent class for characters]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[24/08/2025, Change speed variable type]
+ * Last updated:[25/08/2025, Change speed variable type, add velocity variable, screen position
+ *               getter]
  * Version:     [0.0.1]
  *
  * Notes:
+ * - This is an abstract base class
  * - This class is intended to be inherited by character classes 
  *   (Player character, Enemy).
  * - Manages common character state, including position, textures, and
@@ -26,10 +28,11 @@
 class BaseCharacter{
 public:
     BaseCharacter();
-    virtual void Tick(float deltaTime);
     Vector2 GetWorldPos() { return worldPos; }
     void UndoMovement();
     Rectangle GetCollisionRec();
+    virtual void Tick(float deltaTime);
+    virtual Vector2 GetScreenPos() = 0;
 
 protected:
     // Textures
@@ -38,7 +41,7 @@ protected:
     Texture2D run{LoadTexture("characters/Gordon/Unarmed_Run/Unarmed_Run_full.png")};
 
     // Position vectors
-    Vector2 screenPos{};
+    //Vector2 screenPos{};
     Vector2 worldPos{};
     Vector2 worldPosLastFrame{};
 
@@ -51,6 +54,8 @@ protected:
     int maxFrames{6};
     const float kUpdateTime{1.0f / 12.0f};
     float speed{4.0f};
+    Vector2 velocity{};
+
 
     // Sprite dimensions
     float width{};
