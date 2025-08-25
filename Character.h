@@ -4,18 +4,16 @@
  *              position, movement, animation, and rendering.
  * Author:      [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[21/08/2025, Derive from BaseCharacter class]
+ * Last updated:[25/08/2025, Screen pos getter override, window dimension variables]
  * Version:     [0.0.1]
  *
  * Notes:
  *  - This class is responsible for handling player input for movement.
- *  - It manages sprite sheet animation for idle and run states.
  *
  * Usage:
  *  - Create an instance of Character in main
- *  - Call SetScreenPos() once to initialize its screen position.
  *  - Call Tick() every frame to draw, update character and handle input
- *  - Call UndoMovement() to limit the player character's movement to boundaries or when colliding.
+ *  - Call GetScreenPos() to get the character's world position
  *  
  */
 
@@ -29,9 +27,15 @@ class Character : public BaseCharacter {
 public:
     Character(int winWidth, int winHeight);
     virtual void Tick(float deltaTime) override;
+    virtual Vector2 GetScreenPos() override;
 private:
+    // Animaiton variables
     int maxFrames{12};
     float sheetHeight{4.0f};
+    
+    // Window dimensions
+    int windowWidth{};
+    int windowHeight{};
 };
 
 #endif

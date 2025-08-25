@@ -4,17 +4,19 @@
  *               declared in BaseCharacter.h.]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[21/08/2025, Implemented constructor, UndoMovement, and GetCollisionRec]
+ * Last updated:[25/08/2025, Handle movement in base class, replace screenPos variable]
  * Version:     [0.0.1]
  *
  * Notes:
  *   
  * 
  * Usage:
- *  
+ *  - Depends on raylib for drawing.
+ *  - Depends on raymath for vector operations.
  */
 
 #include "raylib.h"
+#include "raymath.h"
 #include "BaseCharacter.h"
 
 BaseCharacter::BaseCharacter(){
@@ -29,8 +31,8 @@ void BaseCharacter::UndoMovement(){
 Rectangle BaseCharacter::GetCollisionRec(){
     float pad{90.0f}; // rectangle pad
     return Rectangle{
-        screenPos.x + pad,
-        screenPos.y + pad,
+        GetScreenPos().x + pad,
+        GetScreenPos().y + pad,
         (width * scale) - 2 * pad,
         (height * scale) - 2 * pad
     };
@@ -53,11 +55,26 @@ void BaseCharacter::Tick(float deltaTime){
         frame = 0;
     }
     
+    // Update movement
+    if (Vector2Length(velocity) != 0.0) {
+        worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(velocity), speed));
+        rightLeft = ((velocity.x < 0.f) ? -1.0f : 1.0f);
+        texture = run; // Switch to run animation
+        maxFrames = 8;
+    }
+    else {
+        texture = idle; // Switch to idle animation
+        maxFrames = 12;
+    }
+
+    velocity = {}; // reset velocity
+
     // Draw character
     Rectangle source{frame * width, 0.0f, width, height};
-    Rectangle destRec{screenPos.x, screenPos.y, scale *width, scale *height};
+    Rectangle destRec{GetScreenPos().x, GetScreenPos().y, scale *width, scale *height};
     
     // Select different row from spritesheet
     source.y = ((rightLeft == 1.0f) ? 2.0f * source.height : 1.0f * source.height);
     DrawTexturePro(texture, source, destRec, Vector2{}, 0.0f, WHITE);
+
 }   
