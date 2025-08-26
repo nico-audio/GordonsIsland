@@ -4,7 +4,7 @@
  *              position, movement, animation, and rendering.
  * Author:      [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[25/08/2025, Screen pos getter override, window dimension variables]
+ * Last updated:[26/08/2025, Add weapon variables]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -36,6 +36,10 @@ private:
     // Window dimensions
     int windowWidth{};
     int windowHeight{};
+
+    // Weapon variables
+    Texture2D weapon{LoadTexture("characters/weapon_sword.png")};
+    Rectangle weaponCollisionRec{};
 };
 
 #endif
