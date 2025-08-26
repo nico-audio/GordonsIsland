@@ -4,16 +4,18 @@
  *              and runs the main game loop.] 
  * Author:      [Nico V.]
  * Created on:  [11/08/2025]
- * Last updated:[22/08/2025, Set enemy's target to Gordon]
+ * Last updated:[26/08/2025, Attack, kill enemy]
  * Version:     [0.0.1]
  *
  * Notes:
  *  - Handles boundary checking to keep the player within the map limits.
  *  - Implements collision detection between the player and static props.
+ *  - Handles enemy death
  *
  * Usage:
  * [Controls]
  * - Use WASD keys to move the character
+ * - Use the left mouse button to attack
  */
 
 #include "raylib.h"
@@ -110,11 +112,25 @@ int main(){
         // Enemy update
         vampire.Tick(GetFrameTime());
 
-        // Get the character's collision rectangle once per frame
+        // Get the enemy's collision rectangle
         Rectangle enemyCollisionRec = vampire.GetCollisionRec();
+
+        // Dislocate the collision rectangle on the Y-axis
+        float y_offset = 10.0f; // Adjust this value to move the enemy collider box down
+        enemyCollisionRec.y += y_offset;
         
         // Draw enemy's collision box for debugging
         DrawRectangleLines(enemyCollisionRec.x, enemyCollisionRec.y, enemyCollisionRec.width, enemyCollisionRec.height, YELLOW);
+
+        // Kill enemy
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+            DrawText("Attack!", 10, 10, 20, YELLOW); // debug
+
+            if(CheckCollisionRecs(enemyCollisionRec, gordon.GetWeaponCollisionRec())){
+                DrawText("KILL!", 10, 10, 20, RED); // debug
+                vampire.SetAlive(false);
+            }
+        }
 
         // Stop drawing
         EndDrawing();

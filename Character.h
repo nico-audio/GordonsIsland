@@ -4,7 +4,7 @@
  *              position, movement, animation, and rendering.
  * Author:      [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[26/08/2025, Add weapon variables]
+ * Last updated:[26/08/2025, Add weapon variables, weapon collision rec getter]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -28,6 +28,7 @@ public:
     Character(int winWidth, int winHeight);
     virtual void Tick(float deltaTime) override;
     virtual Vector2 GetScreenPos() override;
+    Rectangle GetWeaponCollisionRec() { return weaponCollisionRec; } 
 private:
     // Animaiton variables
     int maxFrames{12};

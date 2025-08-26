@@ -4,7 +4,7 @@
  *              logic for character movement, animation updates, and rendering.]
  * Author:  [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[26/08/2025, Draw weapon]
+ * Last updated:[26/08/2025, Draw weapon, weapon movement]
  * Version:     [0.0.1]
  * Notes:
  *  - Instantiated and used by main.cpp.
@@ -12,6 +12,8 @@
  *
  * Usage:
  *  - Defines the behavior for the player character.
+ *  - Checks if character is alive
+ *  - Defines weapon movement
  *  - Depends on raymath for vector operations.
  *  
  */
@@ -40,6 +42,8 @@ Vector2 Character::GetScreenPos(){
 // Tick - Character update
 void Character::Tick(float deltaTime){
      
+    if (!GetAlive()) return;  // Check if character is alive
+    
     // Gets WASD player input and returns a normalized velocity vector
     if (IsKeyDown(KEY_A)) velocity.x -= 1.0;
     if (IsKeyDown(KEY_D)) velocity.x += 1.0;
@@ -61,7 +65,7 @@ void Character::Tick(float deltaTime){
             weapon.width * scale,
             weapon.height * scale
         };
-        rotation = {35.0f};
+        rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? 35.0f : 0.0f; // weapon rotation
     }
     else{
         origin = {weapon.width * scale, weapon.height * scale}; //facing left
@@ -72,7 +76,7 @@ void Character::Tick(float deltaTime){
             weapon.width * scale,
             weapon.height * scale
         };
-        rotation = {-35.0f};    
+        rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? -35.0f : 0.0f; // weapon rotation
     }
 
     // Draw the weapon
