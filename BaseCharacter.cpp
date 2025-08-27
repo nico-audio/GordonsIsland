@@ -4,7 +4,7 @@
  *               declared in BaseCharacter.h.]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[25/08/2025, Handle movement in base class, replace screenPos variable]
+ * Last updated:[27/08/2025, Animation state machine, hurt animation implemented]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -51,30 +51,35 @@ void BaseCharacter::Tick(float deltaTime){
     if (runningTime >= kUpdateTime){
         runningTime = 0.0;
         frame++;
-        if (frame > maxFrames)
-        frame = 0;
+        if (frame > maxFrames) {
+            frame = 0;
+            if (isHurt) isHurt = false; // Hurt animation finished, revert state
+        }
     }
     
     // Update movement
     if (Vector2Length(velocity) != 0.0) {
         worldPos = Vector2Add(worldPos, Vector2Scale(Vector2Normalize(velocity), speed));
         rightLeft = ((velocity.x < 0.f) ? -1.0f : 1.0f);
-        texture = run; // Switch to run animation
-        maxFrames = 8;
-    }
-    else {
-        texture = idle; // Switch to idle animation
-        maxFrames = 12;
     }
 
-    /*
+    // Animation state machine
     if(isHurt){
+        if (texture.id != hurt.id) frame = 0; // Reset animation on state change
         texture = hurt;
         maxFrames = 6;
+    } else {
+        if (Vector2Length(velocity) != 0.0) {
+            texture = run; // Switch to run animation
+            maxFrames = 8;
+        } else {
+            texture = idle; // Switch to idle animation
+            maxFrames = 12;
+        }
     }
-    */
 
     velocity = {}; // reset velocity
+
 
     // Draw character
     Rectangle source{frame * width, 0.0f, width, height};
