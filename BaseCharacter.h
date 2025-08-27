@@ -3,8 +3,7 @@
  * Description: [Parent class for characters]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[25/08/2025, Change speed variable type, add velocity variable, screen position
- *               getter]
+ * Last updated:[26/08/2025, Character alive stats variables]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -16,7 +15,7 @@
  * 
  * Usage:
  * - Create a derived class from this class
- * - If a collision occurs, call `UndoMovement()` to revert the character to its
+ * - If a collision occurs, call UndoMovement() to revert the character to its
  *   position from the previous frame.
  * 
  */
@@ -30,9 +29,11 @@ public:
     BaseCharacter();
     Vector2 GetWorldPos() { return worldPos; }
     void UndoMovement();
-    Rectangle GetCollisionRec();
+    virtual Rectangle GetCollisionRec();
     virtual void Tick(float deltaTime);
     virtual Vector2 GetScreenPos() = 0;
+    bool GetAlive() { return alive; }
+    void SetAlive(bool isAlive) { alive = isAlive; }
 
 protected:
     // Textures
@@ -41,7 +42,6 @@ protected:
     Texture2D run{LoadTexture("characters/Gordon/Unarmed_Run/Unarmed_Run_full.png")};
 
     // Position vectors
-    //Vector2 screenPos{};
     Vector2 worldPos{};
     Vector2 worldPosLastFrame{};
 
@@ -61,6 +61,9 @@ protected:
     float width{};
     float height{};
     float scale{4.0f};
+
+    // Character status
+    bool alive{true};
 };
 
 #endif

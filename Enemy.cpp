@@ -3,13 +3,14 @@
  * Description: [Implements the Enemy class methods.]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[25/08/2025, Enemy AI - Chase the target, get screen position]
+ * Last updated:[26/08/2025, Get alive status]
  * Version:     [0.0.1]
  *
  * Notes:
  * 
  * Usage:
  *  - Defines the behavior for the enemy.
+ *  - Checks if enemy is alive
  *  - Depends on raylib for input and drawing.
  *   
  */
@@ -28,9 +29,24 @@ Enemy::Enemy(Vector2 pos, Texture2D idleTexture, Texture2D runTexture){
     speed = 3.5f;
 }
 
+
+// Collision box
+Rectangle Enemy::GetCollisionRec(){
+    float pad{30.0f}; // rectangle pad
+    return Rectangle{
+        GetScreenPos().x + pad,
+        GetScreenPos().y + pad,
+        (width * scale) - 2 * pad,
+        (height * scale) - 2 * pad
+    };
+}
+
+
 // Tick - Enemy update
 void Enemy::Tick(float deltaTime){
 
+    if (!GetAlive()) return;  // Check if enemy is alive
+    
     /*Enemy AI - chase the target*/
 
     // Get target screen position

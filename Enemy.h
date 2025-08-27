@@ -27,6 +27,7 @@ public:
     virtual void Tick(float deltaTime) override;
     void SetTarget(Character* character){ target = character; };
     virtual Vector2 GetScreenPos() override;
+    virtual Rectangle GetCollisionRec() override;
 private:
     Character* target;
     int maxFrames{6};

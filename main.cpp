@@ -4,16 +4,18 @@
  *              and runs the main game loop.] 
  * Author:      [Nico V.]
  * Created on:  [11/08/2025]
- * Last updated:[22/08/2025, Set enemy's target to Gordon]
+ * Last updated:[26/08/2025, Attack, kill enemy]
  * Version:     [0.0.1]
  *
  * Notes:
  *  - Handles boundary checking to keep the player within the map limits.
  *  - Implements collision detection between the player and static props.
+ *  - Handles enemy death
  *
  * Usage:
  * [Controls]
  * - Use WASD keys to move the character
+ * - Use the left mouse button to attack
  */
 
 #include "raylib.h"
@@ -110,11 +112,31 @@ int main(){
         // Enemy update
         vampire.Tick(GetFrameTime());
 
-        // Get the character's collision rectangle once per frame
+        // Get the enemy's collision rectangle
         Rectangle enemyCollisionRec = vampire.GetCollisionRec();
+
+        // Dislocate the collision rectangle on the Y-axis
+        float y_offset = 15.0f; // Adjust this value to move the enemy collider box down
+        enemyCollisionRec.y += y_offset;
         
         // Draw enemy's collision box for debugging
         DrawRectangleLines(enemyCollisionRec.x, enemyCollisionRec.y, enemyCollisionRec.width, enemyCollisionRec.height, YELLOW);
+
+        // Kill enemy
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+            DrawText("Attack!", 10, 10, 20, YELLOW); // debug
+
+            if (CheckCollisionRecs(enemyCollisionRec, gordon.GetWeaponCollisionRec())){
+                vampire.SetAlive(false);
+            }
+        }
+        
+        // Collision debug
+        DrawText(TextFormat("Enemy: x=%.1f y=%.1f", enemyCollisionRec.x, enemyCollisionRec.y), 10, 40, 20, YELLOW);
+        DrawText(TextFormat("Weapon: x=%.1f y=%.1f", gordon.GetWeaponCollisionRec().x, gordon.GetWeaponCollisionRec().y), 10, 60, 20, RED);
+
+        bool collided = CheckCollisionRecs(enemyCollisionRec, gordon.GetWeaponCollisionRec());
+        DrawText(collided ? "COLLIDED" : "NO COLLISION", 10, 80, 20, collided ? GREEN : GRAY);
 
         // Stop drawing
         EndDrawing();
