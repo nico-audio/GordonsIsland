@@ -40,6 +40,7 @@ protected:
     Texture2D texture{LoadTexture("characters/Gordon/Unarmed_Idle/Unarmed_Idle_full.png")};
     Texture2D idle{LoadTexture("characters/Gordon/Unarmed_Idle/Unarmed_Idle_full.png")};;
     Texture2D run{LoadTexture("characters/Gordon/Unarmed_Run/Unarmed_Run_full.png")};
+    //Texture2D hurt{LoadTexture("characters/Gordon/Unarmed_Hurt_full.png")};
 
     // Position vectors
     Vector2 worldPos{};
@@ -64,6 +65,7 @@ protected:
 
     // Character status
     bool alive{true};
+    //bool isHurt{false};
 };
 
 #endif

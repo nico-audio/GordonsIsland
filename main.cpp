@@ -4,7 +4,7 @@
  *              and runs the main game loop.] 
  * Author:      [Nico V.]
  * Created on:  [11/08/2025]
- * Last updated:[26/08/2025, Attack, kill enemy]
+ * Last updated:[27/08/2025, Display health, add more enemies to game]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -23,7 +23,7 @@
 #include "Character.h"
 #include "Prop.h"
 #include "Enemy.h"
-
+#include <string>
 
 int main(){
 
@@ -35,7 +35,7 @@ int main(){
     InitWindow(kWindowWidth, kWindowHeight, "Top down 2D game");
 
     // Load world map texture
-    Texture2D worldMap = LoadTexture("nature_tileset/WorldMap2.png");
+    Texture2D worldMap = LoadTexture("nature_tileset/WorldMap3.png");
 
     // Map position
     Vector2 worldMapPos{0.0, 0.0};
@@ -49,15 +49,28 @@ int main(){
         Prop{Vector2{600.0f, 600.0f}, LoadTexture("objects/Fetus_shadow1_2.png")},
         Prop{Vector2{400.0f, 500.0f}, LoadTexture("objects/Eye_plant_shadow2_2.png")}
     };
+
     
     // Enemy variables
-    Enemy vampire{Vector2{},
-                  LoadTexture("characters/Enemies/enemies-vampire_idle.png"),
-                  LoadTexture("characters/Enemies/enemies-vampire_movement.png")
+    Enemy vampire{Vector2{800.0f, 300.0f},
+        LoadTexture("characters/Enemies/enemies-vampire_idle.png"),
+        LoadTexture("characters/Enemies/enemies-vampire_movement.png")
     };
-    
+
+    Enemy skeleton{Vector2{800.0f, 700.0f},
+        LoadTexture("characters/Enemies/enemies-skeleton1_idle.png"),
+        LoadTexture("characters/Enemies/enemies-skeleton1_movement.png")
+    };
+
+    Enemy* enemies[]{
+        &vampire,
+        &skeleton
+    };
+
     // Set enemy target
-    vampire.SetTarget(&gordon);
+    for (auto enemy : enemies){
+        enemy -> SetTarget(&gordon);
+    }
 
     SetTargetFPS(60);
 
@@ -79,6 +92,18 @@ int main(){
             prop.Render(gordon.GetWorldPos());
         }
 
+        // Display health and game over text
+        if (!gordon.GetAlive()){
+            DrawText("Game Over", 55, 60, 50, RED); // Player character is dead
+            EndDrawing();
+            continue;
+        }
+        else{
+            std::string gordonsHealth = "Health: ";
+            gordonsHealth.append(std::to_string(gordon.GetPlayerHealth()), 0, 3);
+            DrawText(gordonsHealth.c_str(), 20, 40, 30, YELLOW);
+        }
+
         // Character update
         gordon.Tick(GetFrameTime());
 
@@ -89,7 +114,7 @@ int main(){
             gordon.GetWorldPos().y + kWindowHeight > worldMap.height * mapScale)
         {
             gordon.UndoMovement();
-            DrawText("Hit the bounds!", 10, 10, 20, RED); // debug
+            //DrawText("Hit the bounds!", 10, 10, 20, RED); // debug
         }
 
         // Get the character's collision rectangle once per frame
@@ -100,17 +125,19 @@ int main(){
             Rectangle propCollisionRec = prop.GetCollisionRec(gordon.GetWorldPos());
             if (CheckCollisionRecs(propCollisionRec, gordonCollisionRec)){
                 gordon.UndoMovement();
-                DrawText("Collision Detected!", 10, 10, 20, RED); // debug
+                //DrawText("Collision Detected!", 10, 10, 20, RED); // debug
             }
             // Draw the prop's collision box for debugging
-            DrawRectangleLines(propCollisionRec.x, propCollisionRec.y, propCollisionRec.width, propCollisionRec.height, RED);
+            //DrawRectangleLines(propCollisionRec.x, propCollisionRec.y, propCollisionRec.width, propCollisionRec.height, RED);
         }
 
         // Draw the character's collision box for debugging
-        DrawRectangleLines(gordonCollisionRec.x, gordonCollisionRec.y, gordonCollisionRec.width, gordonCollisionRec.height, BLUE);
+        //DrawRectangleLines(gordonCollisionRec.x, gordonCollisionRec.y, gordonCollisionRec.width, gordonCollisionRec.height, BLUE);
 
         // Enemy update
-        vampire.Tick(GetFrameTime());
+        for (auto enemy : enemies){
+            enemy -> Tick(GetFrameTime());
+        }
 
         // Get the enemy's collision rectangle
         Rectangle enemyCollisionRec = vampire.GetCollisionRec();
@@ -120,24 +147,28 @@ int main(){
         enemyCollisionRec.y += y_offset;
         
         // Draw enemy's collision box for debugging
-        DrawRectangleLines(enemyCollisionRec.x, enemyCollisionRec.y, enemyCollisionRec.width, enemyCollisionRec.height, YELLOW);
+        //DrawRectangleLines(enemyCollisionRec.x, enemyCollisionRec.y, enemyCollisionRec.width, enemyCollisionRec.height, YELLOW);
 
         // Kill enemy
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
-            DrawText("Attack!", 10, 10, 20, YELLOW); // debug
+            //DrawText("Attack!", 10, 10, 20, YELLOW); // debug
 
-            if (CheckCollisionRecs(enemyCollisionRec, gordon.GetWeaponCollisionRec())){
-                vampire.SetAlive(false);
+            for (auto enemy : enemies){
+                if (CheckCollisionRecs(enemy -> GetCollisionRec(), gordon.GetWeaponCollisionRec())){
+                    enemy -> SetAlive(false);
+                }
             }
         }
         
+        /*
         // Collision debug
         DrawText(TextFormat("Enemy: x=%.1f y=%.1f", enemyCollisionRec.x, enemyCollisionRec.y), 10, 40, 20, YELLOW);
         DrawText(TextFormat("Weapon: x=%.1f y=%.1f", gordon.GetWeaponCollisionRec().x, gordon.GetWeaponCollisionRec().y), 10, 60, 20, RED);
-
+ 
         bool collided = CheckCollisionRecs(enemyCollisionRec, gordon.GetWeaponCollisionRec());
         DrawText(collided ? "COLLIDED" : "NO COLLISION", 10, 80, 20, collided ? GREEN : GRAY);
-
+        */
+        
         // Stop drawing
         EndDrawing();
     }

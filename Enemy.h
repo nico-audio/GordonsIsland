@@ -3,7 +3,7 @@
  * Description: [Defines the Enemy class]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[25/08/2025, Screen position getter]
+ * Last updated:[27/08/2025, Add damage, enemy chase radius]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -13,6 +13,7 @@
  * - Create an instance of Enemy in main
  * - Call Tick() every frame to draw and update enemy
  * - Call SetTarget() to define the enemy's target
+ * - Define enemy damage value
  *  
  */
 
@@ -31,4 +32,6 @@ public:
 private:
     Character* target;
     int maxFrames{6};
+    float damagePerSec{10.0f};
+    float chaseRadius{25.0f};
 };

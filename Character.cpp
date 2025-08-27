@@ -4,7 +4,7 @@
  *              logic for character movement, animation updates, and rendering.]
  * Author:  [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[26/08/2025, Draw weapon, weapon movement]
+ * Last updated:[27/08/2025, define take damage function]
  * Version:     [0.0.1]
  * Notes:
  *  - Instantiated and used by main.cpp.
@@ -85,5 +85,13 @@ void Character::Tick(float deltaTime){
     DrawTexturePro(weapon, source, dest, origin, rotation,  WHITE);
 
     // Weapon debug
-    DrawRectangleLines(weaponCollisionRec.x, weaponCollisionRec.y, weapon.width * scale, weapon.height * scale, GREEN);
+    //DrawRectangleLines(weaponCollisionRec.x, weaponCollisionRec.y, weapon.width * scale, weapon.height * scale, GREEN);    
+}
+
+void Character::TakeDamage(float damage){
+    //isHurt = true;
+    health -= damage;
+    if (health <= 0.0f){
+        SetAlive(false);
+    }
 }

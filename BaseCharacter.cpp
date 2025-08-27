@@ -67,6 +67,13 @@ void BaseCharacter::Tick(float deltaTime){
         maxFrames = 12;
     }
 
+    /*
+    if(isHurt){
+        texture = hurt;
+        maxFrames = 6;
+    }
+    */
+
     velocity = {}; // reset velocity
 
     // Draw character

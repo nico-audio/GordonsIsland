@@ -4,7 +4,7 @@
  *              position, movement, animation, and rendering.
  * Author:      [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[26/08/2025, Add weapon variables, weapon collision rec getter]
+ * Last updated:[27/08/2025, Player health, take damage]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -14,6 +14,8 @@
  *  - Create an instance of Character in main
  *  - Call Tick() every frame to draw, update character and handle input
  *  - Call GetScreenPos() to get the character's world position
+ *  - Call TakeDamage() when the character is hit.
+ *  - Call GetPlayerHealth() to check health status.
  *  
  */
 
@@ -28,7 +30,9 @@ public:
     Character(int winWidth, int winHeight);
     virtual void Tick(float deltaTime) override;
     virtual Vector2 GetScreenPos() override;
-    Rectangle GetWeaponCollisionRec() { return weaponCollisionRec; } 
+    Rectangle GetWeaponCollisionRec() { return weaponCollisionRec; }
+    float GetPlayerHealth() const { return health; }
+    void TakeDamage(float damage);
 private:
     // Animaiton variables
     int maxFrames{12};
@@ -41,6 +45,9 @@ private:
     // Weapon variables
     Texture2D weapon{LoadTexture("characters/weapon_sword.png")};
     Rectangle weaponCollisionRec{};
+
+    // Character stats
+    float health{100.0f};
 };
 
 #endif

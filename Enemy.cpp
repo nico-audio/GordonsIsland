@@ -3,7 +3,7 @@
  * Description: [Implements the Enemy class methods.]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[26/08/2025, Get alive status]
+ * Last updated:[27/08/2025, deal damage to target]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -11,6 +11,7 @@
  * Usage:
  *  - Defines the behavior for the enemy.
  *  - Checks if enemy is alive
+ *  - Deals damage to target
  *  - Depends on raylib for input and drawing.
  *   
  */
@@ -50,8 +51,16 @@ void Enemy::Tick(float deltaTime){
     /*Enemy AI - chase the target*/
 
     // Get target screen position
-    velocity = Vector2Subtract(target->GetScreenPos(), GetScreenPos());
+    velocity = Vector2Subtract(target->GetScreenPos(), GetScreenPos()); // vector from enemy to character
+    if (Vector2Length(velocity) < chaseRadius) velocity = {};
+
     BaseCharacter::Tick(deltaTime);
+
+    // Deal damage
+    if (CheckCollisionRecs(target -> GetCollisionRec(), GetCollisionRec())){
+        target -> TakeDamage(damagePerSec * deltaTime);
+        DrawText(TextFormat("-%.f", damagePerSec), 150, 80, 30, RED); // print damage
+    }
 }
 
 // Returns the screen position
