@@ -51,7 +51,9 @@ void Enemy::Tick(float deltaTime){
     /*Enemy AI - chase the target*/
 
     // Get target screen position
-    velocity = Vector2Subtract(target->GetScreenPos(), GetScreenPos());
+    velocity = Vector2Subtract(target->GetScreenPos(), GetScreenPos()); // vector from enemy to character
+    if (Vector2Length(velocity) < chaseRadius) velocity = {};
+
     BaseCharacter::Tick(deltaTime);
 
     // Deal damage

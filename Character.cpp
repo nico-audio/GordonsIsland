@@ -89,6 +89,7 @@ void Character::Tick(float deltaTime){
 }
 
 void Character::TakeDamage(float damage){
+    //isHurt = true;
     health -= damage;
     if (health <= 0.0f){
         SetAlive(false);

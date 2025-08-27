@@ -3,7 +3,7 @@
  * Description: [Defines the Enemy class]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[27/08/2025, Add damage]
+ * Last updated:[27/08/2025, Add damage, enemy chase radius]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -33,4 +33,5 @@ private:
     Character* target;
     int maxFrames{6};
     float damagePerSec{10.0f};
+    float chaseRadius{25.0f};
 };

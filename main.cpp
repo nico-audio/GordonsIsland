@@ -4,7 +4,7 @@
  *              and runs the main game loop.] 
  * Author:      [Nico V.]
  * Created on:  [11/08/2025]
- * Last updated:[27/08/2025, Display health]
+ * Last updated:[27/08/2025, Display health, add more enemies to game]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -49,15 +49,28 @@ int main(){
         Prop{Vector2{600.0f, 600.0f}, LoadTexture("objects/Fetus_shadow1_2.png")},
         Prop{Vector2{400.0f, 500.0f}, LoadTexture("objects/Eye_plant_shadow2_2.png")}
     };
+
     
     // Enemy variables
-    Enemy vampire{Vector2{},
-                  LoadTexture("characters/Enemies/enemies-vampire_idle.png"),
-                  LoadTexture("characters/Enemies/enemies-vampire_movement.png")
+    Enemy vampire{Vector2{800.0f, 300.0f},
+        LoadTexture("characters/Enemies/enemies-vampire_idle.png"),
+        LoadTexture("characters/Enemies/enemies-vampire_movement.png")
     };
-    
+
+    Enemy skeleton{Vector2{800.0f, 700.0f},
+        LoadTexture("characters/Enemies/enemies-skeleton1_idle.png"),
+        LoadTexture("characters/Enemies/enemies-skeleton1_movement.png")
+    };
+
+    Enemy* enemies[]{
+        &vampire,
+        &skeleton
+    };
+
     // Set enemy target
-    vampire.SetTarget(&gordon);
+    for (auto enemy : enemies){
+        enemy -> SetTarget(&gordon);
+    }
 
     SetTargetFPS(60);
 
@@ -122,7 +135,9 @@ int main(){
         //DrawRectangleLines(gordonCollisionRec.x, gordonCollisionRec.y, gordonCollisionRec.width, gordonCollisionRec.height, BLUE);
 
         // Enemy update
-        vampire.Tick(GetFrameTime());
+        for (auto enemy : enemies){
+            enemy -> Tick(GetFrameTime());
+        }
 
         // Get the enemy's collision rectangle
         Rectangle enemyCollisionRec = vampire.GetCollisionRec();
@@ -138,8 +153,10 @@ int main(){
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
             //DrawText("Attack!", 10, 10, 20, YELLOW); // debug
 
-            if (CheckCollisionRecs(enemyCollisionRec, gordon.GetWeaponCollisionRec())){
-                vampire.SetAlive(false);
+            for (auto enemy : enemies){
+                if (CheckCollisionRecs(enemy -> GetCollisionRec(), gordon.GetWeaponCollisionRec())){
+                    enemy -> SetAlive(false);
+                }
             }
         }
         
