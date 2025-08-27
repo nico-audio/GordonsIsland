@@ -29,7 +29,7 @@ public:
     BaseCharacter();
     Vector2 GetWorldPos() { return worldPos; }
     void UndoMovement();
-    Rectangle GetCollisionRec();
+    virtual Rectangle GetCollisionRec();
     virtual void Tick(float deltaTime);
     virtual Vector2 GetScreenPos() = 0;
     bool GetAlive() { return alive; }

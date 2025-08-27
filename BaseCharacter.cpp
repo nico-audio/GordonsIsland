@@ -71,7 +71,7 @@ void BaseCharacter::Tick(float deltaTime){
 
     // Draw character
     Rectangle source{frame * width, 0.0f, width, height};
-    Rectangle destRec{GetScreenPos().x, GetScreenPos().y, scale *width, scale *height};
+    Rectangle destRec{GetScreenPos().x, GetScreenPos().y, scale * width, scale * height};
     
     // Select different row from spritesheet
     source.y = ((rightLeft == 1.0f) ? 2.0f * source.height : 1.0f * source.height);

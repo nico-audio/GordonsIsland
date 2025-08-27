@@ -29,6 +29,19 @@ Enemy::Enemy(Vector2 pos, Texture2D idleTexture, Texture2D runTexture){
     speed = 3.5f;
 }
 
+
+// Collision box
+Rectangle Enemy::GetCollisionRec(){
+    float pad{30.0f}; // rectangle pad
+    return Rectangle{
+        GetScreenPos().x + pad,
+        GetScreenPos().y + pad,
+        (width * scale) - 2 * pad,
+        (height * scale) - 2 * pad
+    };
+}
+
+
 // Tick - Enemy update
 void Enemy::Tick(float deltaTime){
 

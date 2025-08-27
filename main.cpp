@@ -116,7 +116,7 @@ int main(){
         Rectangle enemyCollisionRec = vampire.GetCollisionRec();
 
         // Dislocate the collision rectangle on the Y-axis
-        float y_offset = 10.0f; // Adjust this value to move the enemy collider box down
+        float y_offset = 15.0f; // Adjust this value to move the enemy collider box down
         enemyCollisionRec.y += y_offset;
         
         // Draw enemy's collision box for debugging
@@ -126,11 +126,17 @@ int main(){
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
             DrawText("Attack!", 10, 10, 20, YELLOW); // debug
 
-            if(CheckCollisionRecs(enemyCollisionRec, gordon.GetWeaponCollisionRec())){
-                DrawText("KILL!", 10, 10, 20, RED); // debug
+            if (CheckCollisionRecs(enemyCollisionRec, gordon.GetWeaponCollisionRec())){
                 vampire.SetAlive(false);
             }
         }
+        
+        // Collision debug
+        DrawText(TextFormat("Enemy: x=%.1f y=%.1f", enemyCollisionRec.x, enemyCollisionRec.y), 10, 40, 20, YELLOW);
+        DrawText(TextFormat("Weapon: x=%.1f y=%.1f", gordon.GetWeaponCollisionRec().x, gordon.GetWeaponCollisionRec().y), 10, 60, 20, RED);
+
+        bool collided = CheckCollisionRecs(enemyCollisionRec, gordon.GetWeaponCollisionRec());
+        DrawText(collided ? "COLLIDED" : "NO COLLISION", 10, 80, 20, collided ? GREEN : GRAY);
 
         // Stop drawing
         EndDrawing();
