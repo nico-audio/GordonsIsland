@@ -3,8 +3,8 @@
  * Description: [Parent class for characters]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[26/08/2025, Character alive stats variables]
- * Version:     [0.0.1]
+ * Last updated:[04/09/2025, reset function]
+ * Version:     [0.0.2]
  *
  * Notes:
  * - This is an abstract base class
@@ -34,7 +34,7 @@ public:
     virtual Vector2 GetScreenPos() = 0;
     bool GetAlive() { return alive; }
     void SetAlive(bool isAlive) { alive = isAlive; }
-
+    virtual void Reset();
 protected:
     // Textures
     Texture2D texture{LoadTexture("characters/Gordon/Unarmed_Idle/Unarmed_Idle_full.png")};

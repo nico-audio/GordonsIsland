@@ -4,8 +4,8 @@
  *               declared in BaseCharacter.h.]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[27/08/2025, Animation state machine, hurt animation implemented]
- * Version:     [0.0.1]
+ * Last updated:[04/09/2025, reset function]
+ * Version:     [0.0.2]
  *
  * Notes:
  *   
@@ -89,4 +89,9 @@ void BaseCharacter::Tick(float deltaTime){
     source.y = ((rightLeft == 1.0f) ? 2.0f * source.height : 1.0f * source.height);
     DrawTexturePro(texture, source, destRec, Vector2{}, 0.0f, WHITE);
 
-}   
+    
+}
+
+void BaseCharacter::Reset(){
+    SetAlive(true);
+}

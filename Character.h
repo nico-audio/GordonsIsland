@@ -4,8 +4,8 @@
  *              position, movement, animation, and rendering.
  * Author:      [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[27/08/2025, Player health, take damage]
- * Version:     [0.0.1]
+ * Last updated:[04/09/2025, reset function]
+ * Version:     [0.0.2]
  *
  * Notes:
  *  - This class is responsible for handling player input for movement.
@@ -33,6 +33,7 @@ public:
     Rectangle GetWeaponCollisionRec() { return weaponCollisionRec; }
     float GetPlayerHealth() const { return health; }
     void TakeDamage(float damage);
+    virtual void Reset() override;
 private:
     // Animaiton variables
     int maxFrames{12};

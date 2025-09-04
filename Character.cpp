@@ -5,7 +5,7 @@
  * Author:  [Nico V.]
  * Created on:  [18/08/2025]
  * Last updated:[27/08/2025, define take damage function]
- * Version:     [0.0.1]
+ * Version:     [0.0.2]
  * Notes:
  *  - Instantiated and used by main.cpp.
  *
@@ -94,4 +94,10 @@ void Character::TakeDamage(float damage){
     if (health <= 0.0f){
         SetAlive(false);
     }
+}
+
+void Character::Reset(){
+    BaseCharacter::Reset();
+    health = 100.0f;
+    worldPos = {};
 }

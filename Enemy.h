@@ -3,8 +3,8 @@
  * Description: [Defines the Enemy class]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[27/08/2025, Add damage, enemy chase radius]
- * Version:     [0.0.1]
+ * Last updated:[04/09/2025, reset function]
+ * Version:     [0.0.2]
  *
  * Notes:
  * - This class manages sprite sheet animation for idle and run states.
@@ -29,8 +29,10 @@ public:
     void SetTarget(Character* character){ target = character; };
     virtual Vector2 GetScreenPos() override;
     virtual Rectangle GetCollisionRec() override;
+    virtual void Reset() override;
 private:
     Character* target;
+    Vector2 initialPos{};
     int maxFrames{6};
     float damagePerSec{10.0f};
     float chaseRadius{25.0f};
