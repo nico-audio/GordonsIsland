@@ -3,8 +3,8 @@
  * Description: [Implements the Enemy class methods.]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[27/08/2025, deal damage to target]
- * Version:     [0.0.1]
+ * Last updated:[04/09/2025, reset function]
+ * Version:     [0.0.2]
  *
  * Notes:
  * 
@@ -22,6 +22,7 @@
 
 Enemy::Enemy(Vector2 pos, Texture2D idleTexture, Texture2D runTexture){
     worldPos = pos;
+    initialPos = pos;
     texture = idleTexture;
     idle = idleTexture;
     run = runTexture;
@@ -54,7 +55,7 @@ void Enemy::Tick(float deltaTime){
     velocity = Vector2Subtract(target->GetScreenPos(), GetScreenPos()); // vector from enemy to character
     if (Vector2Length(velocity) < chaseRadius) velocity = {};
 
-    BaseCharacter::Tick(deltaTime);
+    Character::Tick(deltaTime);
 
     // Deal damage
     if (CheckCollisionRecs(target -> GetCollisionRec(), GetCollisionRec())){
@@ -66,4 +67,10 @@ void Enemy::Tick(float deltaTime){
 // Returns the screen position
 Vector2 Enemy::GetScreenPos(){
     return Vector2Subtract(worldPos, target->GetWorldPos());
+}
+
+void Enemy::Reset(){
+    Character::Reset();
+    worldPos = initialPos; // reset position
+    target = nullptr; // forget the target
 }
