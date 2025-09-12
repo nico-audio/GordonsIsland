@@ -55,7 +55,7 @@ void Enemy::Tick(float deltaTime){
     velocity = Vector2Subtract(target->GetScreenPos(), GetScreenPos()); // vector from enemy to character
     if (Vector2Length(velocity) < chaseRadius) velocity = {};
 
-    BaseCharacter::Tick(deltaTime);
+    Character::Tick(deltaTime);
 
     // Deal damage
     if (CheckCollisionRecs(target -> GetCollisionRec(), GetCollisionRec())){
@@ -70,7 +70,7 @@ Vector2 Enemy::GetScreenPos(){
 }
 
 void Enemy::Reset(){
-    BaseCharacter::Reset();
+    Character::Reset();
     worldPos = initialPos; // reset position
     target = nullptr; // forget the target
 }

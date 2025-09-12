@@ -3,7 +3,7 @@
  * Description: [Defines the Enemy class]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[04/09/2025, reset function]
+ * Last updated:[12/09/2025, update dependencies]
  * Version:     [0.0.2]
  *
  * Notes:
@@ -19,19 +19,19 @@
 
 
  #include "raylib.h"
- #include "BaseCharacter.h"
  #include "Character.h"
+ #include "PlayerCharacter.h"
 
-class Enemy : public BaseCharacter {
+class Enemy : public Character {
 public:
     Enemy(Vector2 pos, Texture2D idleTexture, Texture2D runTexture);
     virtual void Tick(float deltaTime) override;
-    void SetTarget(Character* character){ target = character; };
+    void SetTarget(PlayerCharacter* character){ target = character; };
     virtual Vector2 GetScreenPos() override;
     virtual Rectangle GetCollisionRec() override;
     virtual void Reset() override;
 private:
-    Character* target;
+    PlayerCharacter* target;
     Vector2 initialPos{};
     int maxFrames{6};
     float damagePerSec{10.0f};

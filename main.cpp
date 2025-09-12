@@ -20,7 +20,7 @@
 
 #include "raylib.h"
 #include "raymath.h"
-#include "Character.h"
+#include "PlayerCharacter.h"
 #include "Prop.h"
 #include "Enemy.h"
 #include <string>
@@ -42,7 +42,7 @@ int main(){
     const float mapScale{4.0f};
 
     // Character variables
-    Character gordon{kWindowWidth, kWindowHeight};
+    PlayerCharacter gordon{kWindowWidth, kWindowHeight};
     
     // Objects
     Prop props[2]{
