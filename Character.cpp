@@ -1,10 +1,10 @@
 /*
- * File:        [BaseCharacter.cpp]
+ * File:        [Character.cpp]
  * Description: [Defines the logic for the core character functionalities
  *               declared in BaseCharacter.h.]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[04/09/2025, reset function]
+ * Last updated:[12/09/2025, rename class]
  * Version:     [0.0.2]
  *
  * Notes:

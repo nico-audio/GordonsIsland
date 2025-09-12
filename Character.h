@@ -1,9 +1,9 @@
 /*
- * File:        [BaseCharacter.h]
+ * File:        [Character.h]
  * Description: [Parent class for characters]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[04/09/2025, reset function]
+ * Last updated:[12/09/2025, rename class]
  * Version:     [0.0.2]
  *
  * Notes:
