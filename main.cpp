@@ -4,7 +4,7 @@
  *              and runs the main game loop.] 
  * Author:      [Nico V.]
  * Created on:  [11/08/2025]
- * Last updated:[27/08/2025, Display health, add more enemies to game]
+ * Last updated:[14/09/2025, Update asset file path]
  * Version:     [0.0.1]
  *
  * Notes:
@@ -21,7 +21,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "PlayerCharacter.h"
-#include "Prop.h"
+#include "Scene/Prop.h"
 #include "Enemy.h"
 #include <string>
 
@@ -35,7 +35,7 @@ int main(){
     InitWindow(kWindowWidth, kWindowHeight, "Top down 2D game");
 
     // Load world map texture
-    Texture2D worldMap = LoadTexture("nature_tileset/WorldMap3.png");
+    Texture2D worldMap = LoadTexture("Assets/environment/nature_tileset/WorldMap3.png");
 
     // Map position
     Vector2 worldMapPos{0.0, 0.0};
@@ -46,20 +46,20 @@ int main(){
     
     // Objects
     Prop props[2]{
-        Prop{Vector2{600.0f, 600.0f}, LoadTexture("objects/Fetus_shadow1_2.png")},
-        Prop{Vector2{400.0f, 500.0f}, LoadTexture("objects/Eye_plant_shadow2_2.png")}
+        Prop{Vector2{600.0f, 600.0f}, LoadTexture("Assets/environment/objects/Fetus_shadow1_2.png")},
+        Prop{Vector2{400.0f, 500.0f}, LoadTexture("Assets/environment//Eye_plant_shadow2_2.png")}
     };
 
     
     // Enemy variables
     Enemy vampire{Vector2{800.0f, 300.0f},
-        LoadTexture("characters/Enemies/enemies-vampire_idle.png"),
-        LoadTexture("characters/Enemies/enemies-vampire_movement.png")
+        LoadTexture("Assets/characters/Enemies/Vampire/enemies-vampire_idle.png"),
+        LoadTexture("Assets/characters/Enemies/Vampire/enemies-vampire_movement.png")
     };
 
     Enemy skeleton{Vector2{800.0f, 700.0f},
-        LoadTexture("characters/Enemies/enemies-skeleton1_idle.png"),
-        LoadTexture("characters/Enemies/enemies-skeleton1_movement.png")
+        LoadTexture("Assets/characters/Enemies/Skeleton/enemies-skeleton1_idle.png"),
+        LoadTexture("Assets/characters/Enemies/Skeleton/enemies-skeleton1_movement.png")
     };
 
     Enemy* enemies[]{

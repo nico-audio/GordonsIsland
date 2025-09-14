@@ -3,7 +3,7 @@
  * Description: [Parent class for characters]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[12/09/2025, rename class]
+ * Last updated:[14/09/2025, update asset file path]
  * Version:     [0.0.2]
  *
  * Notes:
@@ -37,10 +37,10 @@ public:
     virtual void Reset();
 protected:
     // Textures
-    Texture2D texture{LoadTexture("characters/Gordon/Unarmed_Idle/Unarmed_Idle_full.png")};
-    Texture2D idle{LoadTexture("characters/Gordon/Unarmed_Idle/Unarmed_Idle_full.png")};;
-    Texture2D run{LoadTexture("characters/Gordon/Unarmed_Run/Unarmed_Run_full.png")};
-    Texture2D hurt{LoadTexture("characters/Gordon/Unarmed_Hurt_full.png")};
+    Texture2D texture{LoadTexture("Assets/characters/Gordon/Unarmed_Idle/Unarmed_Idle_full.png")};
+    Texture2D idle{LoadTexture("Assets/characters/Gordon/Unarmed_Idle/Unarmed_Idle_full.png")};;
+    Texture2D run{LoadTexture("Assets/characters/Gordon/Unarmed_Run/Unarmed_Run_full.png")};
+    Texture2D hurt{LoadTexture("Assets/characters/Gordon/Unarmed_Hurt_full.png")};
 
     // Position vectors
     Vector2 worldPos{};
