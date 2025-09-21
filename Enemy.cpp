@@ -3,7 +3,7 @@
  * Description: [Implements the Enemy class methods.]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[04/09/2025, reset function]
+ * Last updated:[14/09/2025, Only implements AI behavior if target is set]
  * Version:     [0.0.2]
  *
  * Notes:
@@ -43,25 +43,49 @@ Rectangle Enemy::GetCollisionRec(){
     };
 }
 
-
 // Tick - Enemy update
 void Enemy::Tick(float deltaTime){
 
     if (!GetAlive()) return;  // Check if enemy is alive
-    
-    /*Enemy AI - chase the target*/
 
+    if (target){
+        
+        cameraPos = target->GetWorldPos();
+
+        /* Enemy AI - chase the target */
+
+        // Vector from enemy to player character
+        velocity = Vector2Subtract(target->GetScreenPos(), GetScreenPos());
+        if (Vector2Length(velocity) < chaseRadius) velocity = {};
+
+        // Deal damage
+        if (CheckCollisionRecs(target->GetCollisionRec(), GetCollisionRec()))
+        {
+            target->TakeDamage(damagePerSec * deltaTime);
+            DrawText(TextFormat("-%.f", damagePerSec), 150, 80, 30, RED); // print damage
+        }
+    }
+    else{
+        // If target is null don't move
+        velocity = {};
+    }
+
+    Character::Tick(deltaTime);
+    
+    /*
     // Get target screen position
     velocity = Vector2Subtract(target->GetScreenPos(), GetScreenPos()); // vector from enemy to character
     if (Vector2Length(velocity) < chaseRadius) velocity = {};
-
+ 
     Character::Tick(deltaTime);
-
+ 
     // Deal damage
     if (CheckCollisionRecs(target -> GetCollisionRec(), GetCollisionRec())){
         target -> TakeDamage(damagePerSec * deltaTime);
         DrawText(TextFormat("-%.f", damagePerSec), 150, 80, 30, RED); // print damage
     }
+    */
+    
 }
 
 // Returns the screen position

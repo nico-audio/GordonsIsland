@@ -4,7 +4,7 @@
  *              position, movement, animation, and rendering.
  * Author:      [Nico V.]
  * Created on:  [18/08/2025]
- * Last updated:[12/09/2025, rename class]
+ * Last updated:[14/09/2025, update asset file path]
  * Version:     [0.0.2]
  *
  * Notes:
@@ -44,7 +44,7 @@ private:
     int windowHeight{};
 
     // Weapon variables
-    Texture2D weapon{LoadTexture("characters/weapon_sword.png")};
+    Texture2D weapon{LoadTexture("Assets/weapons/weapon_sword.png")};
     Rectangle weaponCollisionRec{};
 
     // Character stats

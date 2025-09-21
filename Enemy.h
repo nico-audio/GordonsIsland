@@ -3,7 +3,7 @@
  * Description: [Defines the Enemy class]
  * Author:      [Nico V.]
  * Created on:  [21/08/2025]
- * Last updated:[12/09/2025, update dependencies]
+ * Last updated:[14/09/2025, Store camera's position]
  * Version:     [0.0.2]
  *
  * Notes:
@@ -32,6 +32,7 @@ public:
     virtual void Reset() override;
 private:
     PlayerCharacter* target;
+    Vector2 cameraPos{};
     Vector2 initialPos{};
     int maxFrames{6};
     float damagePerSec{10.0f};
